@@ -6,13 +6,14 @@ import (
 )
 
 var (
-	logger = config.NewLogger("")
+	logger config.Logger
 )
 
 func main() {
+	logger = *config.GetLogger("main")
 	err := config.Init()
 	if err != nil {
-		logger.Errorf("Error initializing config: %s", err.Error())
+		logger.Errorf("Error initializing config: %v", err)
 		return
 	}
 	//Initialize the router

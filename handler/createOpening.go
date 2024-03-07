@@ -6,8 +6,13 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func CreateOpeningHandler(c *gin.Context) {
-	c.JSON(http.StatusOK, gin.H{
+func CreateOpeningHandler(ctx *gin.Context) {
+	request := struct {
+		role string
+	}{}
+	ctx.BindJSON(&request)
+
+	ctx.JSON(http.StatusOK, gin.H{
 		"msg": "POST Opening",
 	})
 }
