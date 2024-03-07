@@ -4,6 +4,7 @@ APP_NAME=gopportunities
 
 default: run
 run:
+	@swag init
 	@go run main.go
 build:
 	@go build -o $(APP_NAME) main.go
