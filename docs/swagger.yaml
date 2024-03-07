@@ -21,12 +21,50 @@ definitions:
       message:
         type: string
     type: object
+  handler.DeleteOpeningResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.OpeningResponse'
+      message:
+        type: string
+    type: object
   handler.ErrorResponse:
     properties:
       errorStatus:
         type: integer
       message:
         type: string
+    type: object
+  handler.ListOpeningResponse:
+    properties:
+      data:
+        items:
+          $ref: '#/definitions/schemas.OpeningResponse'
+        type: array
+      message:
+        type: string
+    type: object
+  handler.ShowOpeningResponse:
+    properties:
+      data:
+        $ref: '#/definitions/schemas.OpeningResponse'
+      message:
+        type: string
+    type: object
+  handler.UpdateOpeningRequest:
+    properties:
+      company:
+        type: string
+      link:
+        type: string
+      location:
+        type: string
+      remote:
+        type: boolean
+      role:
+        type: string
+      salary:
+        type: integer
     type: object
   schemas.OpeningResponse:
     properties:
@@ -55,6 +93,58 @@ info:
   contact: {}
 paths:
   /opening:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a existing job opening
+      parameters:
+      - description: Request body
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.DeleteOpeningResponse'
+        "400":
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Delete opening
+      tags:
+      - Openings
+    get:
+      consumes:
+      - application/json
+      description: Show a existing job opening
+      parameters:
+      - description: Request body
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ShowOpeningResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Show opening
+      tags:
+      - Openings
     post:
       consumes:
       - application/json
@@ -83,5 +173,54 @@ paths:
             $ref: '#/definitions/handler.ErrorResponse'
       summary: Create an opening
       tags:
-      - openings
+      - Openings
+    put:
+      consumes:
+      - application/json
+      description: Show a existing job opening
+      parameters:
+      - description: Request body
+        in: query
+        name: id
+        required: true
+        type: string
+      - description: Request body
+        in: body
+        name: request
+        required: true
+        schema:
+          $ref: '#/definitions/handler.UpdateOpeningRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ShowOpeningResponse'
+        "404":
+          description: Not Found
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: Show opening
+      tags:
+      - Openings
+  /openings:
+    get:
+      consumes:
+      - application/json
+      description: List a existing job opening
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/handler.ListOpeningResponse'
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: '#/definitions/handler.ErrorResponse'
+      summary: List opening
+      tags:
+      - Openings
 swagger: "2.0"

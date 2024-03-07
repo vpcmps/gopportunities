@@ -8,6 +8,17 @@ import (
 	"github.com/vpcmps/gopportunities/schemas"
 )
 
+// @BasePath /api/v1
+
+// @Summary Show opening
+// @Description Show a existing job opening
+// @Tags Openings
+// @Accept json
+// @Produce json
+// @Param id query string true "Request body"
+// @Success 200 {object} ShowOpeningResponse
+// @Failure 404 {object} ErrorResponse
+// @Router /opening [get]
 func GetOpeningHandler(c *gin.Context) {
 	id := c.Query("id")
 
